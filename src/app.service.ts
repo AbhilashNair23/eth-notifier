@@ -1,7 +1,6 @@
 import { Get, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NotificationService } from './common/notification.service';
-// import Web3 from 'web3';
 
 @Injectable()
 export class AppService {
@@ -34,9 +33,18 @@ export class AppService {
   async send(from: string, to: string, amount?: string): Promise<any> {
     const Web3 = require('web3');
     const web3 = new Web3(new Web3.providers.HttpProvider(this.configService.get('PROVIDER')))
+    const fromAddressBalance = await this.getBalance(from);
     const transactionAmount = (amount !== undefined) ? amount : this.configService.get('TRANSACTION_AMOUNT');
-    const response = await web3.eth.sendTransaction({ from, to, value: web3.utils.toWei(transactionAmount, this.configService.get('CURRENCY')), data: web3.utils.toHex('send ether') })
-    await this.triggerNotification(from, amount);
+    let response;
+    if (Number(fromAddressBalance.balance.toString().split(' ')[0]) >= Number(transactionAmount)) {
+      response = await web3.eth.sendTransaction({ from, to, value: web3.utils.toWei(transactionAmount, this.configService.get('CURRENCY')), data: web3.utils.toHex('send ether') })
+      await this.triggerNotification(from, amount);
+    } else {
+      response = {
+        status: HttpStatus.EXPECTATION_FAILED,
+        error: 'Balance insufficient!!'
+      }
+    }
     return response;
   }
 
