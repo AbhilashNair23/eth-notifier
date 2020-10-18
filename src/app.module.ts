@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { NotificationService } from './common/notification.service';
 import { CronService } from './cron/cron-service';
 
 @Module({
@@ -14,6 +15,6 @@ import { CronService } from './cron/cron-service';
     HttpModule
   ],
   controllers: [AppController],
-  providers: [AppService, CronService],
+  providers: [AppService, CronService, NotificationService],
 })
 export class AppModule { }

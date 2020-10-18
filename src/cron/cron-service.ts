@@ -1,6 +1,7 @@
 import { HttpService, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { NotificationService } from 'src/common/notification.service';
 
 @Injectable()
 export class CronService {
@@ -9,20 +10,13 @@ export class CronService {
     constructor(
         private readonly httpService: HttpService,
         private readonly configService: ConfigService,
+        private readonly notificationService: NotificationService,
     ) { }
 
     @Cron(CronExpression.EVERY_HOUR)
     async handleCron(): Promise<any> {
         this.logger.debug('Called in every second');
-        const url = this.configService.get('SLACK_URL');
-        const message = { "text": "Hello, World!" };
-        const response = await this.httpService.post<any>(
-            url,
-            message, {
-            headers: {
-                'Content-type': 'application/json',
-            },
-        }).toPromise();
-        this.logger.debug(response.data);
+        const message = { "text": "Welcome, World!" };
+        await this.notificationService.notifyCurrentBalance(message);
     }
 }
