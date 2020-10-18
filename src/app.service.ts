@@ -44,6 +44,6 @@ export class AppService {
     const message = {
       'text': '\n' + 'Transaction Summary' + '\n' + 'Account Address : ' + from + '\n' + 'Transaction Amount : ' + amount + '\n ' + 'Current Balance : ' + currentBalance.balance
     };
-    await this.notificationService.notifyCurrentBalance(message);
+    await this.notificationService.notifyMessage(message);
   }
 }

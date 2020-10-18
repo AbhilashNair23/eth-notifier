@@ -17,6 +17,6 @@ export class CronService {
     async handleCron(): Promise<any> {
         this.logger.debug('Called in every second');
         const message = { "text": "Welcome, World!" };
-        await this.notificationService.notifyCurrentBalance(message);
+        await this.notificationService.notifyMessage(message);
     }
 }

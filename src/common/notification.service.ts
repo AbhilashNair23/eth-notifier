@@ -10,7 +10,7 @@ export class NotificationService {
         private readonly httpService: HttpService,
     ) { }
 
-    async notifyCurrentBalance(message: any): Promise<any> {
+    async notifyMessage(message: any): Promise<any> {
         const url = this.configService.get('SLACK_URL');
         try {
             const response = await this.httpService.post<any>(
