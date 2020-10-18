@@ -30,14 +30,20 @@
 
 ## Installation
 
+Install Truffle, Ganache CLI and NestJS globally. If you prefer, the graphical version of Ganache works as well!
+
 ```bash
 $ npm install
+$ npm install -g truffle
+$ npm install -g ganache-cli
+$ npm install -g @nestjs/cli
 ```
 
 ## Running the app
 
 ```bash
 # development
+$ ganache-cli
 $ npm run start
 
 # watch mode
