@@ -35,15 +35,34 @@ export class AppService {
     const Web3 = require('web3');
     const web3 = new Web3(new Web3.providers.HttpProvider(this.configService.get('PROVIDER')))
     const transactionAmount = (amount !== undefined) ? amount : this.configService.get('TRANSACTION_AMOUNT');
+    const response = await web3.eth.sendTransaction({ from, to, value: web3.utils.toWei(transactionAmount, this.configService.get('CURRENCY')), data: web3.utils.toHex('send ether') })
     await this.triggerNotification(from, amount);
-    return await web3.eth.sendTransaction({ from, to, value: web3.utils.toWei(transactionAmount, this.configService.get('CURRENCY')), data: web3.utils.toHex('send ether') })
+    return response;
   }
 
-  async triggerNotification(from: string, amount: string): Promise<any> {
+  async triggerNotification(from: string, amount?: string): Promise<any> {
     const currentBalance = await this.getBalance(from);
-    const message = {
-      'text': '\n' + 'Transaction Summary' + '\n' + 'Account Address : ' + from + '\n' + 'Transaction Amount : ' + amount + '\n ' + 'Current Balance : ' + currentBalance.balance
-    };
+    let message;
+    if (amount !== undefined) {
+      message = {
+        'text': '\n' + 'Transaction Summary' + '\n' + 'Account Address : ' + from + '\n' + 'Transaction Amount : ' + amount + '\n ' + 'Current Balance : ' + currentBalance.balance
+      };
+    } else {
+      message = {
+        'text': '\n' + 'Transaction Summary' + '\n' + 'Account Address : ' + from + '\n' + 'Current Balance : ' + currentBalance.balance
+      };
+    }
     await this.notificationService.notifyMessage(message);
+  }
+
+  async minimumBalanceNotifier(from: string): Promise<any> {
+    const currentBalance = await this.getBalance(from);
+    let message;
+    if (Number(currentBalance.balance.toString().split(' ')[0]) < Number(this.configService.get('MINIMUM_BALANCE'))) {
+      message = {
+        'text': '\n' + 'Low balance alert!!!' + '\n' + 'Account Address : ' + from + '\n' + 'Current Balance : ' + currentBalance.balance
+      };
+      await this.notificationService.notifyMessage(message);
+    }
   }
 }

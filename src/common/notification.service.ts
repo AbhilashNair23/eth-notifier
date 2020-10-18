@@ -20,7 +20,6 @@ export class NotificationService {
                     'Content-type': 'application/json',
                 },
             }).toPromise();
-            this.logger.debug(response.data);
             return {
                 status: HttpStatus.OK,
                 data: response.data
