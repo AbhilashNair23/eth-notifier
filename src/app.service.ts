@@ -30,7 +30,7 @@ export class AppService {
     return accounts;
   }
 
-  async send(from: string, to: string, amount?: string): Promise<any> {
+  async etherTransaction(from: string, to: string, amount?: string): Promise<any> {
     const Web3 = require('web3');
     const web3 = new Web3(new Web3.providers.HttpProvider(this.configService.get('PROVIDER')))
     const fromAddressBalance = await this.getBalance(from);

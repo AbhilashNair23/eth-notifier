@@ -18,8 +18,8 @@ export class AppController {
   }
 
   @Post('/transaction')
-  async send(@Headers('from') from: string, @Headers('to') to: string, @Headers('amount') amount?: string): Promise<any> {
-    return await this.appService.send(from, to, amount);
+  async etherTransaction(@Headers('from') from: string, @Headers('to') to: string, @Headers('amount') amount?: string): Promise<any> {
+    return await this.appService.etherTransaction(from, to, amount);
   }
 
 }
