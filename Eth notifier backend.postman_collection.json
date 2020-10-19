@@ -1,0 +1,82 @@
+{
+	"info": {
+		"_postman_id": "95766da1-9fec-408d-b659-3ac5c4ca71fa",
+		"name": "Eth notifier backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Transaction API",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "From",
+						"value": "0x41b02a6595b86352A3f2a0cDBf2a4F0efC8f1064",
+						"type": "text"
+					},
+					{
+						"key": "To",
+						"value": "0xA9F055183751A31C8b738A2846776fDA5A2ab19D",
+						"type": "text"
+					},
+					{
+						"key": "Amount",
+						"value": "1.0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/transaction",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get balance API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/balance/0x41b02a6595b86352A3f2a0cDBf2a4F0efC8f1064",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"balance",
+						"0x41b02a6595b86352A3f2a0cDBf2a4F0efC8f1064"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Account details API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/accounts",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

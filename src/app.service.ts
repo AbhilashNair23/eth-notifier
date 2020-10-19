@@ -36,7 +36,7 @@ export class AppService {
     const fromAddressBalance = await this.getBalance(from);
     const transactionAmount = (amount !== undefined) ? amount : this.configService.get('TRANSACTION_AMOUNT');
     let response;
-    if (Number(fromAddressBalance.balance.toString().split(' ')[0]) >= Number(transactionAmount)) {
+    if (Number(fromAddressBalance.balance.toString().split(' ')[0]) > Number(transactionAmount)) {
       response = await web3.eth.sendTransaction({ from, to, value: web3.utils.toWei(transactionAmount, this.configService.get('CURRENCY')), data: web3.utils.toHex('send ether') })
       await this.triggerNotification(from, amount);
     } else {
